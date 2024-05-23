@@ -4,12 +4,12 @@ import time
 import random
 import os
 
-WIN_WIDTH = 600
+WIN_WIDTH = 500
 WIN_HEIGHT= 800
 
 BIRD_IMGS = [pygame.transform.scale2x(pygame.image.load(os.path.join("imgs", "bird1.png"))), pygame.transform.scale2x(pygame.image.load(os.path.join("imgs", "bird2.png"))), pygame.transform.scale2x(pygame.image.load(os.path.join("imgs", "bird3.png")))]
 PIPE_IMG = [pygame.transform.scale2x(pygame.image.load(os.path.join("imgs", "pipe.png")))]
-BG_IMG = [pygame.transform.scale2x(pygame.image.load(os.path.join("imgs", "bg.png")))]
+BG_IMG = pygame.transform.scale2x(pygame.image.load(os.path.join("imgs", "bg.png")))
 BASE_IMG = [pygame.transform.scale2x(pygame.image.load(os.path.join("imgs", "base.png")))]
 
 class Bird:         
@@ -76,3 +76,23 @@ class Bird:
     def get_mask(self):
         return pygame.mask.from_surface(self.img)
 
+def draw_window(window, bird):
+    window.blit(BG_IMG, (0,0))
+    bird.draw(window)
+    pygame.display.update()
+
+def main():
+    flappybird = Bird(200,200)
+    run = True
+    window = pygame.display.set_mode((WIN_WIDTH, WIN_HEIGHT))
+
+    while run:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                run = False   
+        draw_window(window, flappybird)
+
+    pygame.quit()
+    quit()
+
+main()
